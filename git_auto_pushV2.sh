@@ -15,7 +15,7 @@ commit_and_push() {
     git add .
   elif [[ "$choice" == "specific" ]]; then
     # Prompt for .js or .css files
-    read -p "Enter the names of the .js or .css files you want to commit (separated by space): " -a fileNames
+    read -p "Enter the names of the files you want to commit with the file extension  (separated by space): " -a fileNames
     for file in "${fileNames[@]}"; do
       if [[ -f "$file" ]]; then
         git add "$file"
