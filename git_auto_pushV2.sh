@@ -1,16 +1,39 @@
+#!/bin/bash
+
 initialize_repository() {
   if [ ! -d ".git" ]; then
-    read -p "Enter the name of the remote repository " repoName
+    read -p "Enter the name of the remote repository (e.g., https://github.com/user/repo.git): " repoName
     git init
     git remote add origin "$repoName"
   fi
 }
 
 commit_and_push() {
+  read -p "Do you want to commit all files or specific files? (all/specific): " choice
+
+  if [[ "$choice" == "all" ]]; then
+    git add .
+  elif [[ "$choice" == "specific" ]]; then
+    # Prompt for .js or .css files
+    read -p "Enter the names of the .js or .css files you want to commit (separated by space): " -a fileNames
+    for file in "${fileNames[@]}"; do
+      if [[ -f "$file" ]]; then
+        git add "$file"
+      else
+        echo "File '$file' does not exist. Skipping."
+      fi
+    done
+  else
+    echo "Invalid choice. Exiting."
+    exit 1
+  fi
+
   read -p "Enter your commit message: " commitMessage
 
-  git add .
   git commit -m "$commitMessage"
+
+  # Ensure the commit message is visible in GitHub
+  echo "Commit message: $commitMessage"
 
   # Ask for branch name
   read -p "Enter the branch name you want to push to: " branchName
