@@ -21,8 +21,8 @@ function findPrimes(numbers) {
       }
     }
   
-    let max = primeArray.length > 0 ? primeArray[0] : null;
-    let min = primeArray.length > 0 ? primeArray[0] : null;
+    let max = primeArray[0];
+    let min = primeArray[0];
   
     for (let j = 1; j < primeArray.length; j++) {
       if (primeArray[j] > max) {
